@@ -101,6 +101,66 @@ class ScriptureApi {
         })
     })
   }
+
+  getBibleBookSections(bibleId, bookId, params={}) {
+    return new Promise((resolve, reject) => {
+      Fetch.bibleBookSections(this.apiKey, bibleId, bookId, params)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        })
+    })
+  }
+
+  getBibleChapterSections(bibleId, chapterId, params={}) {
+    return new Promise((resolve, reject) => {
+      Fetch.bibleChapterSections(this.apiKey, bibleId, chapterId, params)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        })
+    })
+  }
+
+  getBibleSections(bibleId, sectionId, params={}) {
+    return new Promise((resolve, reject) => {
+      Fetch.bibleSection(this.apiKey, bibleId, sectionId, params)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        })
+    })
+  }
+
+  getBibleChapterVerses(bibleId, chapterId, params={}) {
+    return new Promise((resolve, reject) => {
+      Fetch.bibleChapterVerses(this.apiKey, bibleId, chapterId, params)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        })
+    })
+  }
+
+  getBibleVerses(bibleId, verseId, params={}) {
+    return new Promise((resolve, reject) => {
+      Fetch.bibleChapterVerses(this.apiKey, bibleId, verseId, params)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        })
+    })
+  }
 }
 
 module.exports = ScriptureApi;

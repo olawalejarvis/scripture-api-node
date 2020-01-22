@@ -90,40 +90,7 @@ class Fetch {
   }
 
   static bibleBookChapter(apiKey, bibleId, chapterId, params) {
-    let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}?`;
-    const {
-      contentType,
-      includeNotes,
-      includeTitles,
-      includeChapterNumbers,
-      includeVerseNumbers,
-      includeVerseSpans,
-      parallels,
-    } = params;
-    if (includeNotes) {
-      url = `${url}include-notes=${includeNotes}&`;
-    }
-    if (includeTitles) {
-      url = `${url}include-titles=${includeTitles}&`;
-    }
-    if (includeChapterNumbers) {
-      url = `${url}include-chapter-numbers=${includeChapterNumbers}&`;
-    }
-    if (includeVerseNumbers) {
-      url = `${url}include-verse-numbers=${includeVerseNumbers}&`;
-    }
-    if (includeVerseSpans) {
-      url = `${url}include-verse-spans=${includeVerseSpans}&`;
-    }
-    if (parallels) {
-      url = `${url}parallels=${parallels}&`;
-    }
-    if (contentType && ['json, htnl, text'].includes(contentType.toLowerCase())) {
-      url = `${url}content-type=${contentType.toLowerCase()}`;
-    } else {
-      url = `${url}content-type=json`;
-    }
-
+    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}`, params);
     return axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -133,40 +100,7 @@ class Fetch {
   }
 
   static biblePassage(apiKey, bibleId, passageId, params) {
-    const {
-      contentType,
-      includeNotes,
-      includeTitles,
-      includeChapterNumbers,
-      includeVerseNumbers,
-      includeVerseSpans,
-      parallels,
-    } = params;
-
-    let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/passages/${passageId}?`;
-    if (includeNotes) {
-      url = `${url}include-notes=${includeNotes}&`;
-    }
-    if (includeTitles) {
-      url = `${url}include-titles=${includeTitles}&`;
-    }
-    if (includeChapterNumbers) {
-      url = `${url}include-chapter-numbers=${includeChapterNumbers}&`;
-    }
-    if (includeVerseNumbers) {
-      url = `${url}include-verse-numbers=${includeVerseNumbers}&`;
-    }
-    if (includeVerseSpans) {
-      url = `${url}include-verse-spans=${includeVerseSpans}&`;
-    }
-    if (parallels) {
-      url = `${url}parallels=${parallels}&`;
-    }
-    if (contentType && ['json, htnl, text'].includes(contentType.toLowerCase())) {
-      url = `${url}content-type=${contentType.toLowerCase()}`;
-    } else {
-      url = `${url}content-type=json`;
-    }
+    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/passages/${passageId}`, params);
     return axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -204,8 +138,96 @@ class Fetch {
     })
   }
 
+  static bibleBookSections(apiKey, bibleId, bookId, params) {
+    const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/books/${bookId}/sections`, params);
+    return axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+    })
+  }
+
+  static bibleChapterSections(apiKey, bibleId, chapterId, params) {
+    const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/chapters/${chapterId}/sections`, params);
+    return axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+    })
+  }
+
+  static bibleSection(apiKey, bibleId, sectionId, params) {
+    const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/sections/${sectionId}`, params);
+    return axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+    })
+  }
+
+  static bibleChapterVerses(apiKey, bibleId, chapterId, params) {
+    let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}/verses`;
+    return axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+    })
+  }
+
+  static bibleVerse(apiKey, bibleId, verseId, params) {
+    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/verses/${verseId}`, params);
+    return axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+    })
+  }
+
   _isNumber(n) {
     return !isNaN(parseFloat(n)) && !isNaN(n - 0) && (typeof n === 'string' || typeof n === 'number') 
+  }
+
+  _getLongUrl(link, params) {
+    const {
+      contentType,
+      includeNotes,
+      includeTitles,
+      includeChapterNumbers,
+      includeVerseNumbers,
+      includeVerseSpans,
+      parallels,
+    } = params;
+
+    let url = `${link}?`;
+    if (includeNotes) {
+      url = `${url}include-notes=${includeNotes}&`;
+    }
+    if (includeTitles) {
+      url = `${url}include-titles=${includeTitles}&`;
+    }
+    if (includeChapterNumbers) {
+      url = `${url}include-chapter-numbers=${includeChapterNumbers}&`;
+    }
+    if (includeVerseNumbers) {
+      url = `${url}include-verse-numbers=${includeVerseNumbers}&`;
+    }
+    if (includeVerseSpans) {
+      url = `${url}include-verse-spans=${includeVerseSpans}&`;
+    }
+    if (parallels) {
+      url = `${url}parallels=${parallels}&`;
+    }
+    if (contentType && ['json, htnl, text'].includes(contentType.toLowerCase())) {
+      url = `${url}content-type=${contentType.toLowerCase()}`;
+    } else {
+      url = `${url}content-type=json`;
+    }
+    return url;
   }
 }
 
