@@ -1,0 +1,24 @@
+{
+  "name": "scripture-api",
+  "version": "1.0.0",
+  "description": "A node interface for https://scripture.api.bible",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bible",
+    "scripture",
+    "api",
+    "verses",
+    "kjv",
+    "chapters",
+    "book",
+    "holy"
+  ],
+  "author": "Olawale Aladeusi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
