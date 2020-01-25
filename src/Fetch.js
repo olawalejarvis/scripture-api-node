@@ -1,9 +1,20 @@
-const axios = require('axios');
+const request = require('request');
 
 const ApiEnum = require('./ApiEnum');
 
+/**
+ * FETCH CLASS
+ */
 class Fetch {
-  static bibles(apiKey, params) {
+  /**
+   * Fetch all available bible translations
+   * @param {string} apiKey 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibles(apiKey, params, callback) {
     const {
       language,
       abbreviation,
@@ -24,28 +35,35 @@ class Fetch {
       if(ids) {
         url = `${url}ids=${ids}`;
       }
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bible(apiKey, bibleId) {
+  /**
+   * Fetch a bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bible(apiKey, bibleId, callback) {
     const url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}`;
     if (!bibleId) {
       return this.bibles(apiKey);
     }
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleBooks(apiKey, bibleId, params) {
+  /**
+   * Fetch all books from the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleBooks(apiKey, bibleId, params, callback) {
     let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/books?`;
     const { includeChapters, includeChaptersAndSection } = params;
     if (includeChapters) {
@@ -55,61 +73,82 @@ class Fetch {
     if (includeChaptersAndSection) {
       url = `${url}include-chapters-and-sections=${includeChaptersAndSection}`
     }
-
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleBook(apiKey, bibleId, bookId, params) {
+  /**
+   * Fetch a book from the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} bookId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleBook(apiKey, bibleId, bookId, params, callback) {
     let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/books/${bookId}?`;
     const { includeChapters } = params;
     if (includeChapters) {
       url = `${url}include-chapters=${includeChapters}`;
     }
-
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleBookChapters(apiKey, bibleId, bookId, params) {
+  /**
+   * Fetch all chapters from a book in the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} bookId 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleBookChapters(apiKey, bibleId, bookId, callback) {
     let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/books/${bookId}/chapters`;
-     return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleBookChapter(apiKey, bibleId, chapterId, params) {
-    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+  /**
+   * Fetch a chapter from bible book
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} chapterId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleBookChapter(apiKey, bibleId, chapterId, params, callback) {
+    let url = this._getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}`, params);
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static biblePassage(apiKey, bibleId, passageId, params) {
-    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/passages/${passageId}`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+  /**
+   * Get a passage from the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} passageId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static biblePassage(apiKey, bibleId, passageId, params, callback) {
+    let url = this._getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/passages/${passageId}`, params);
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static search(apiKey, bibleId, params) {
+  /**
+   * Search the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static search(apiKey, bibleId, params, callback) {
     let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/search?`;
     const {
       query,
@@ -129,70 +168,96 @@ class Fetch {
     } else {
       url = `${url}offset=0&`;
     }
-
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleBookSections(apiKey, bibleId, bookId, params) {
+  /**
+   * Fetch all sections in a bible book
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} bookId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleBookSections(apiKey, bibleId, bookId, params, callback) {
     const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/books/${bookId}/sections`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleChapterSections(apiKey, bibleId, chapterId, params) {
-    const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/chapters/${chapterId}/sections`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+  /**
+   * Fetch all sections in a chapter of the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} chapterId 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleChapterSections(apiKey, bibleId, chapterId, callback) {
+    const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/chapters/${chapterId}/sections`);
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleSection(apiKey, bibleId, sectionId, params) {
+  /**
+   * Fetch a section in the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} sectionId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleSection(apiKey, bibleId, sectionId, params, callback) {
     const url = this._getLongUrl(`${ApiEnum.baseUrl}/bibles/${bibleId}/sections/${sectionId}`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleChapterVerses(apiKey, bibleId, chapterId, params) {
+  /**
+   * Fetch all verses in a chapter of the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} chapterId 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleChapterVerses(apiKey, bibleId, chapterId, callback) {
     let url = `${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/chapters/${chapterId}/verses`;
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  static bibleVerse(apiKey, bibleId, verseId, params) {
-    let url = _getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/verses/${verseId}`, params);
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey
-      },
-    })
+  /**
+   * Fetch a verse in the bible
+   * @param {string} apiKey 
+   * @param {string} bibleId 
+   * @param {string} verseId 
+   * @param {object} params 
+   * @param {function name(error, res, body) {
+     
+   }} callback 
+   */
+  static bibleVerse(apiKey, bibleId, verseId, params, callback) {
+    let url = this._getLongUrl(`${ApiEnum.baseUrl}${ApiEnum.bibles}/${bibleId}/verses/${verseId}`, params);
+    return request(this._getRequestOption(url, apiKey), callback);
   }
 
-  _isNumber(n) {
+  /**
+   * check if a value is a number
+   * @param {number} n 
+   */
+  static _isNumber(n) {
     return !isNaN(parseFloat(n)) && !isNaN(n - 0) && (typeof n === 'string' || typeof n === 'number') 
   }
 
-  _getLongUrl(link, params) {
+  /**
+   * generate url based on params
+   * @param {string} link 
+   * @param {object} params 
+   */
+  static _getLongUrl(link, params = {}) {
     const {
       contentType,
       includeNotes,
@@ -228,6 +293,21 @@ class Fetch {
       url = `${url}content-type=json`;
     }
     return url;
+  }
+
+  /**
+   * Generate request option
+   * @param {string} url 
+   * @param {string} apiKey 
+   */
+  static _getRequestOption(url, apiKey) {
+    return {
+      method: 'GET',
+      url,
+      headers: {
+        'api-key': apiKey
+      }
+    }
   }
 }
 
