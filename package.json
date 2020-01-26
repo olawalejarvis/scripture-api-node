@@ -1,6 +1,6 @@
 {
   "name": "scripture-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A node interface for https://scripture.api.bible",
   "main": "index.js",
   "scripts": {
@@ -16,9 +16,14 @@
     "book",
     "holy"
   ],
-  "author": "Olawale Aladeusi",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.19.2"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olawalejarvis/scripture-api-node"
+  },
+  "bugs": {
+    "url": "https://github.com/olawalejarvis/scripture-api-node/issues"
+  },
+  "homepage": "https://github.com/olawalejarvis/scripture-api-node",
+  "author": "Olawale Aladeusi(olawalejarvis@gmail.com)",
+  "license": "ISC"
 }

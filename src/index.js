@@ -59,8 +59,8 @@ class ScriptureApi {
    * @param {string} bibleId 
    * @param {object} params 
    *   params = {
-   *    include-chapters: true/false - default false,
-   *    include-chapters-and-sections: true/false - default false
+   *    includeChapters: true/false - default false,
+   *    includeChaptersAndSections: true/false - default false
    *   }
    *  @returns {object} returns a promise
    */
