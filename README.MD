@@ -160,7 +160,7 @@ const params = {
   includeVerseSpans: false,
 
   // Comma delimited list of bibleIds to include
-  paralles: ''
+  parallels: ''
 };
 
 scriptureApi.getBibleBookChapter(bibleId, chapterId, params)
@@ -204,7 +204,7 @@ const params = {
   includeVerseSpans: false,
 
   // Comma delimited list of bibleIds to include
-  paralles: ''
+  parallels: ''
 };
 
 scriptureApi.getBiblePassage(bibleId, passageId, params)
@@ -279,7 +279,7 @@ const params = {
   includeVerseSpans: false,
 
   // Comma delimited list of bibleIds to include
-  paralles: ''
+  parallels: ''
 };
 
 scriptureApi.getBibleBookSections(bibleId, bookId, params)
@@ -346,7 +346,7 @@ const params = {
   includeVerseSpans: false,
 
   // Comma delimited list of bibleIds to include
-  paralles: ''
+  parallels: ''
 };
 
 scriptureApi.getBibleSections(bibleId, sectionId)
@@ -413,7 +413,7 @@ const params = {
   includeVerseSpans: false,
 
   // Comma delimited list of bibleIds to include
-  paralles: ''
+  parallels: ''
 };
 
 scriptureApi.getBibleVerses(bibleId, chapterId)
